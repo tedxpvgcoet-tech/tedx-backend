@@ -49,8 +49,8 @@ const appendToJsonFile = async ({
   console.log(rateLimit.rate);
 };
 
-function addSubscriber(newSubscriber) {
-  appendToJsonFile({
+export async function addSubscriber(newSubscriber) {
+  await appendToJsonFile({
     path: "data/mailing_list.json",
     newEntry: newSubscriber,
     message: "Add new subscriber"
