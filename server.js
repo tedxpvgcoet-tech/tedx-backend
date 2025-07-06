@@ -4,11 +4,9 @@ import { addSubscriber, addSpeaker, addSponsor } from "./index.js";
 
 const app = express();
 app.use(cors());
-// Uncomment and update origin before deploying
-// app.use(cors({ origin: "https://frontend.com" }));
 app.use(express.json());
 
-app.post("/subscribe", async (req, res) => {
+app.post("/subscriber", async (req, res) => {
   try {
     const newSubscriber = req.body;
     if (!newSubscriber?.email) {
