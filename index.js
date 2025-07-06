@@ -57,4 +57,18 @@ export async function addSubscriber(newSubscriber) {
   });
 }
 
-// Add two more functions using appendToJsonFile as a helper function, name them as addSpeaker and addSponsor after the iput fields of forms are finalized
+export async function addSpeaker(newSpeaker) {
+  await appendToJsonFile({
+    path: "data/speakers.json",
+    newEntry: newSpeaker,
+    message: "Add new speaker"
+  });
+}
+
+export async function addSponsor(newSponsor) {
+  await appendToJsonFile({
+    path: "data/sponsors.json",
+    newEntry: newSponsor,
+    message: "Add new sponsor"
+  });
+}
