@@ -1,40 +1,58 @@
 import express from "express";
+import cors from "cors";
 import { addSubscriber, addSpeaker, addSponsor } from "./index.js";
 
 const app = express();
+app.use(cors());
+// Uncomment and update origin before deploying
+// app.use(cors({ origin: "https://frontend.com" }));
 app.use(express.json());
 
-app.post("/subscribe", (req, res) => {
+app.post("/subscribe", async (req, res) => {
   try {
     const newSubscriber = req.body;
-    addSubscriber(newSubscriber);
-    res.status(200).send("Subscriber added!");
+    if (!newSubscriber?.email) {
+      return res.status(400).send("Missing required field: email");
+    }
+    await addSubscriber(newSubscriber);
+    res.status(201).send("Subscriber added!");
   } catch(err) {
-    res.status(500).send("Error adding subscriber!")
+    console.error(err);
+    res.status(500).send("Internal server error")
   }
 });
 
-app.post("/speaker", (req, res) => {
+app.post("/speaker", async (req, res) => {
   try {
     const newSpeaker = req.body;
-    addSpeaker(newSpeaker);
-    res.status(200).send("Speaker added!");
+    if (!newSpeaker?.email) {
+      return res.status(400).send("Missing required field: email");
+    }
+    await addSpeaker(newSpeaker);
+    res.status(201).send("Speaker added!");
   } catch(err) {
-    res.status(500).send("Error adding speaker!")
+    console.error(err);
+    res.status(500).send("Internal server error")
   }
 });
 
-app.post("/sponsor", (req, res) => {
+app.post("/sponsor", async (req, res) => {
   try {
     const newSponsor = req.body;
-    addSponsor(newSponsor);
-    res.status(200).send("Sponsor added!");
+    if (!newSponsor?.email) {
+      return res.status(400).send("Missing required field: email");
+    }
+    await addSponsor(newSponsor);
+    res.status(201).send("Sponsor added!");
   } catch(err) {
-    res.status(500).send("Error adding sponsor!")
+    console.error(err);
+    res.status(500).send("Internal server error")
   }
 });
+
+app.get("/", (req, res) => res.send("API is running ✅"));
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log("Server running");
+  console.log(`Server running on port ${PORT}`);
 });
