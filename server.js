@@ -10,13 +10,13 @@ app.post("/subscriber", async (req, res) => {
   try {
     const newSubscriber = req.body;
     if (!newSubscriber?.email) {
-      return res.status(400).send("Missing required field: email");
+      return res.status(400).json({ error: "Missing required field: email" });
     }
     await addSubscriber(newSubscriber);
-    res.status(201).send("Subscriber added!");
-  } catch(err) {
+    res.status(201).json({ message: "Subscriber added!" });
+  } catch (err) {
     console.error(err);
-    res.status(500).send("Internal server error")
+    res.status(500).json({ error: "Internal server error" });
   }
 });
 
@@ -24,13 +24,13 @@ app.post("/speaker", async (req, res) => {
   try {
     const newSpeaker = req.body;
     if (!newSpeaker?.email) {
-      return res.status(400).send("Missing required field: email");
+      return res.status(400).json({ error: "Missing required field: email" });
     }
     await addSpeaker(newSpeaker);
-    res.status(201).send("Speaker added!");
-  } catch(err) {
+    res.status(201).json({ message: "Speaker added!" });
+  } catch (err) {
     console.error(err);
-    res.status(500).send("Internal server error")
+    res.status(500).json({ error: "Internal server error" });
   }
 });
 
@@ -38,17 +38,19 @@ app.post("/sponsor", async (req, res) => {
   try {
     const newSponsor = req.body;
     if (!newSponsor?.email) {
-      return res.status(400).send("Missing required field: email");
+      return res.status(400).json({ error: "Missing required field: email" });
     }
     await addSponsor(newSponsor);
-    res.status(201).send("Sponsor added!");
-  } catch(err) {
+    res.status(201).json({ message: "Sponsor added!" });
+  } catch (err) {
     console.error(err);
-    res.status(500).send("Internal server error")
+    res.status(500).json({ error: "Internal server error" });
   }
 });
 
-app.get("/", (req, res) => res.send("API is running ✅"));
+app.get("/", (req, res) => {
+  res.json({ status: "API is running ✅" });
+});
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
