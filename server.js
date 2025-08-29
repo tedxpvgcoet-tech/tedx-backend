@@ -48,6 +48,10 @@ app.post("/sponsor", async (req, res) => {
   }
 });
 
+app.get("/fun", (req, res) => {
+  res.redirect("https://www.google.com");
+});
+
 app.get("/", (req, res) => {
   res.json({ status: "API is running ✅" });
 });
