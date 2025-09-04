@@ -49,7 +49,7 @@ app.post("/sponsor", async (req, res) => {
 });
 
 app.get("/fun", (req, res) => {
-  res.redirect("https://www.google.com");
+  res.redirect("https://www.youtube.com/shorts/41iWg91yFv0");
 });
 
 app.get("/", (req, res) => {
