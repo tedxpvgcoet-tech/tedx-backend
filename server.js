@@ -42,7 +42,10 @@ const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
   port: 465,
   secure: true,
-  family: 4, // Force IPv4 routing directly at the socket level
+  family: 4,
+  dnsLookup: (hostname, options, callback) => {
+    dns.lookup(hostname, { family: 4 }, callback);
+  },
   auth: {
     user: process.env.GMAIL_USER,
     pass: (process.env.GMAIL_APP_PASSWORD || "").replace(/\s+/g, ""),
