@@ -84,6 +84,7 @@ const apiLimiter = rateLimit({
 
 // ─── Express setup ──────────────────────────────────────────────────────────
 const app = express();
+app.set("trust proxy", 1); // Trust Render's proxy to get real client IPs
 app.use(cors());
 app.use(express.json({ limit: "50mb" }));
 
