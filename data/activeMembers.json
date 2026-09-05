@@ -1,422 +1,310 @@
 [
   {
-    "name": "Omkar Hokarne",
-    "email": "23118012@pvgcoet.ac.in",
-    "phone": "8600089178",
-    "team": "Organisers",
-    "displayName": "Omkar Hokarne"
-  },
-  {
-    "name": "Lakshmikant Chaudhari",
-    "email": "23110057@pvgcoet.ac.in",
-    "phone": "939539567",
-    "team": "Organisers",
-    "displayName": "Lakshmikant Chaudhari"
-  },
-  {
-    "name": "Afaan Shaikh",
-    "email": "23112001@pvgcoet.ac.in",
-    "phone": "9168798062",
-    "team": "Organisers",
-    "displayName": "Afaan Shaikh"
-  },
-  {
-    "name": "Sukrut Subhash Angal",
-    "email": "sukrut.angal13@gmail.com",
-    "phone": "9767157802",
-    "team": "Logistics & Operations",
-    "displayName": "Sukrut Angal (Lead)"
-  },
-  {
-    "name": "Anuj Wagh",
-    "email": "anujwagh5001@gmail.com",
-    "phone": "9172032726",
-    "team": "Logistics & Operations",
-    "displayName": "Anuj Wagh"
-  },
-  {
-    "name": "Anushka Kanade",
-    "email": "anu.kanade2006@gmail.com",
-    "phone": "NA",
-    "team": "Logistics & Operations",
-    "displayName": "Anushka Kanade"
-  },
-  {
-    "name": "Shreeya Nene",
-    "email": "neneshreeya@gmail.com",
-    "phone": "8491906310",
-    "team": "Logistics & Operations",
-    "displayName": "Shreeya Nene"
-  },
-  {
-    "name": "Ayush Sunil Janunkar",
-    "email": "ayushjanunkar4@gmail.com",
-    "phone": "9028397074",
-    "team": "Logistics & Operations",
-    "displayName": "Ayush Janunkar"
-  },
-  {
-    "name": "Atharva Sudesh Gore",
-    "email": "atharvagore229@gmail.com",
-    "phone": "9665420021",
-    "team": "Logistics & Operations",
-    "displayName": "Atharva Gore"
-  },
-  {
-    "name": "Varad Mogle",
-    "email": "mogle.varad@gmail.com",
-    "phone": "9403497455",
-    "team": "Logistics & Operations",
-    "displayName": "Varad Mogle"
-  },
-  {
-    "name": "Pushkar Shingate",
-    "email": "pushkarshingate7@gmail.com",
-    "phone": "7350767331",
-    "team": "Logistics & Operations",
-    "displayName": "Pushkar Shingate"
-  },
-  {
-    "name": "Prajwal Samaptrao Adasul",
-    "email": "prajwaladasul@gmail.com",
-    "phone": "9156074575",
-    "team": "Logistics & Operations",
-    "displayName": "Prajwal Adasul"
-  },
-  {
-    "name": "Samiha Aserkar",
-    "email": "aserkarsamiha1611@gmail.com",
-    "phone": "9834919634",
-    "team": "Logistics & Operations",
-    "displayName": "Samiha Aserkar"
-  },
-  {
-    "name": "Rushikesh Kandalkar",
-    "email": "rushikeshkandalkar07@gmail.com",
-    "phone": "7249056155",
-    "team": "Logistics & Operations",
-    "displayName": "Rushikesh Kandalkar"
-  },
-  {
-    "name": "Maitreyee Prayag",
-    "email": "maitreyee.prayag@gmail.com",
-    "phone": "8930580346",
-    "team": "Logistics & Operations",
-    "displayName": "Maitreyee Prayag"
-  },
-  {
-    "name": "Ritika Paradkar",
-    "email": "ritikaparadkar8999@gmail.com",
-    "phone": "8999593804",
-    "team": "Finance & Sponsorship",
-    "displayName": "Ritika Paradkar"
-  },
-  {
-    "name": "Durga Gunjal",
-    "email": "durgadgunjal21@gmail.com",
-    "phone": "9763082378",
-    "team": "Finance & Sponsorship",
-    "displayName": "Durga Gunjal"
-  },
-  {
-    "name": "Siddhi Patil",
-    "email": "siddhipatil1071@gmail.com",
-    "phone": "NA",
-    "team": "Finance & Sponsorship",
-    "displayName": "Siddhi Patil"
-  },
-  {
-    "name": "Mayuresh Shevlikar",
-    "email": "mayureshshevlikar05@gmail.com",
-    "phone": "7741083760",
-    "team": "Finance & Sponsorship",
-    "displayName": "Mayuresh Shevlikar"
-  },
-  {
-    "name": "Varad Amit Athalye",
-    "email": "vsamiket2125@gmail.com",
-    "phone": "7498086581",
-    "team": "Finance & Sponsorship",
-    "displayName": "Varad Athalye"
-  },
-  {
-    "name": "Avadhoot Amrale",
-    "email": "avadhoot.amrale@gmail.com",
-    "phone": "9730076935",
-    "team": "Finance & Sponsorship",
-    "displayName": "Avadhoot Amrale"
-  },
-  {
-    "name": "Pratham Verma",
-    "email": "23114067@pvgcoet.ac.in",
-    "phone": "8857964820",
-    "team": "Finance & Sponsorship",
-    "displayName": "Pratham Verma"
-  },
-  {
-    "name": "Swaraj Awad",
-    "email": "swarajawad2@gmail.com",
-    "phone": "9307026817",
-    "team": "Finance & Sponsorship",
-    "displayName": "Swaraj Awad"
-  },
-  {
-    "name": "Avanti Satpute",
-    "email": "24042089@pvgcoet.ac.in",
-    "phone": "8459022066",
-    "team": "Design & Production",
-    "displayName": "Avanti Satpute (Lead)"
-  },
-  {
-    "name": "Sutirth Doshi",
-    "email": "sutirthdevil@gmail.com",
-    "phone": "8010489212",
-    "team": "Design & Production",
-    "displayName": "Sutirth Doshi"
-  },
-  {
-    "name": "Priya R",
-    "email": "priyarangapure20@gmail.com",
-    "phone": "7666976554",
-    "team": "Design & Production",
-    "displayName": "Priya Rangapure"
-  },
-  {
-    "name": "Hridaya Khare",
-    "email": "hridayakhare@gmail.com",
-    "phone": "7823087504",
-    "team": "Design & Production",
-    "displayName": "Hridaya Khare"
-  },
-  {
-    "name": "Prachi",
-    "email": "prachisonawane995@gmail.com",
-    "phone": "9168278970",
-    "team": "Design & Production",
-    "displayName": "Prachi Sonawane"
-  },
-  {
-    "name": "Devesh Rahul Bhavsar",
-    "email": "devesh.bhavsar08@gmail.com",
-    "phone": "9404844698",
-    "team": "Design & Production",
-    "displayName": "Devesh Bhavsar"
-  },
-  {
-    "name": "Abhishek Chopade",
-    "email": "abhichopade4141@gmail.com",
-    "phone": "8669239437",
-    "team": "Design & Production",
-    "displayName": "Abhishek Chopade"
-  },
-  {
-    "name": "Parth Devi",
-    "email": "msiparth@gmail.com",
-    "phone": "7507574488",
-    "team": "Design & Production",
-    "displayName": "Parth Devi"
-  },
-  {
-    "name": "Atharva Joshi",
-    "email": "23118007@pvgcoet.ac.in",
-    "phone": "9359958795",
-    "team": "Media & Marketing",
-    "displayName": "Atharva Joshi (Lead)"
-  },
-  {
-    "name": "Rohan",
-    "email": "naikr2400@gmail.com",
-    "phone": "9284398472",
-    "team": "Media & Marketing",
-    "displayName": "Rohan Naik"
-  },
-  {
-    "name": "Janhavi Salunkhe",
-    "email": "janhavii.salunkhe@gmail.com",
-    "phone": "9850875641",
-    "team": "Media & Marketing",
-    "displayName": "Janhavi Salunkhe"
-  },
-  {
-    "name": "Aariya Vora",
+    "firstName": "Aariya",
+    "lastName": "Vora",
     "email": "aariyavora@gmail.com",
-    "phone": "8762351170",
     "team": "Media & Marketing",
-    "displayName": "Aariya Vora"
+    "role": "Member"
   },
   {
-    "name": "Neeraj Chaini",
+    "firstName": "Neeraj",
+    "lastName": "Chaini",
     "email": "neerajc1707@gmail.com",
-    "phone": "7558374815",
     "team": "Media & Marketing",
-    "displayName": "Neeraj Chaini"
+    "role": "Member"
   },
   {
-    "name": "Gaurav Gore",
+    "firstName": "Gaurav",
+    "lastName": "Gore",
     "email": "gauravgore242005@gmail.com",
-    "phone": "8308576169",
     "team": "Media & Marketing",
-    "displayName": "Gaurav Gore"
+    "role": "Member"
   },
   {
-    "name": "Siddhant Pawar",
-    "email": "25122168@pvgcoet.ac.in",
-    "phone": "7020399908",
+    "firstName": "Siddhant",
+    "lastName": "Pawar",
+    "email": "psiddhant2707@gmail.com",
     "team": "Media & Marketing",
-    "displayName": "Siddhant Pawar"
+    "role": "Member"
   },
   {
-    "name": "Sumedh Kuchanwar",
+    "firstName": "Sumedh",
+    "lastName": "Kuchanwar",
     "email": "sumedh.8787@gmail.com",
-    "phone": "8087449478",
     "team": "Media & Marketing",
-    "displayName": "Sumedh Kuchanwar"
+    "role": "Member"
   },
   {
-    "name": "Krutika Devare",
-    "email": "krutikadevare27@gmail.com",
-    "phone": "8180821302",
+    "firstName": "Krutika",
+    "lastName": "Devare",
+    "email": "krutikadevare@gmail.com",
     "team": "Media & Marketing",
-    "displayName": "Krutika Devare"
+    "role": "Member"
   },
   {
-    "name": "Narayani Sundeep Jalgaonkar",
-    "email": "narayanii0206@gmail.com",
-    "phone": "7028394906",
-    "team": "Curation",
-    "displayName": "Narayani Jalgaonkar (Lead)"
+    "firstName": "Priya",
+    "lastName": "Rangapure",
+    "email": "priyarangapure20@gmail.com",
+    "team": "Design & Production",
+    "role": "Member"
   },
   {
-    "name": "Rugveda Dhole",
-    "email": "rugvedadhole@gmail.com",
-    "phone": "9405944059",
-    "team": "Curation",
-    "displayName": "Rugveda Dhole"
+    "firstName": "Hridaya",
+    "lastName": "Khare",
+    "email": "hridayakhare@gmail.com",
+    "team": "Design & Production",
+    "role": "Member"
   },
   {
-    "name": "Fanaa Jain",
-    "email": "fanaajain20@gmail.com",
-    "phone": "9021262179",
-    "team": "Curation",
-    "displayName": "Fanaa Jain"
+    "firstName": "Prachi",
+    "lastName": "Sonawane",
+    "email": "prachisonawane995@gmail.com",
+    "team": "Design & Production",
+    "role": "Member"
   },
   {
-    "name": "Samiksha Jadhav",
-    "email": "csamikshajadhav@gmail.com",
-    "phone": "9730103901",
-    "team": "Curation",
-    "displayName": "Samiksha Jadhav"
+    "firstName": "Devesh",
+    "lastName": "Bhavsar",
+    "email": "devesh.bhavsar08@gmail.com",
+    "team": "Design & Production",
+    "role": "Member"
   },
   {
-    "name": "Nachiket Bedekar",
-    "email": "bedekarnachiket146@gmail.com",
-    "phone": "7767895577",
-    "team": "Curation",
-    "displayName": "Nachiket Bedekar"
+    "firstName": "Abhishek",
+    "lastName": "Chopade",
+    "email": "25124133@pvgcoet.ac.in",
+    "team": "Design & Production",
+    "role": "Member"
   },
   {
-    "name": "Shrinand Joshi",
-    "email": "shrinandjoshi005@gmail.com",
-    "phone": "9075286270",
-    "team": "Curation",
-    "displayName": "Shrinand Joshi"
+    "firstName": "Parth",
+    "lastName": "Devi",
+    "email": "msiparth@gmail.com",
+    "team": "Design & Production",
+    "role": "Member"
   },
   {
-    "name": "Hardik Mhetre",
-    "email": "hardikmhetre@gmail.com",
-    "phone": "8208731624",
-    "team": "Curation",
-    "displayName": "Hardik Mhetre"
+    "firstName": "Durga",
+    "lastName": "Gunjal",
+    "email": "durgadgunjal21@gmail.com",
+    "team": "Finance & Sponsorship",
+    "role": "Member"
   },
   {
-    "name": "Ved Purohit",
-    "email": "23111010@pvgcoet.ac.in",
-    "phone": "7499169712",
-    "team": "Curation",
-    "displayName": "Ved Purohit"
+    "firstName": "Siddhi",
+    "lastName": "Patil",
+    "email": "siddhipatil1071@gmail.com",
+    "team": "Finance & Sponsorship",
+    "role": "Member"
   },
   {
-    "name": "Jagdish Prajapati",
-    "email": "jagadishdrp@gmail.com",
-    "phone": "9284205842",
-    "team": "Technical",
-    "displayName": "Jagdish Prajapati (Lead)"
+    "firstName": "Mayuresh",
+    "lastName": "Shevlikar",
+    "email": "mayureshshevlikar@gmail.com",
+    "team": "Finance & Sponsorship",
+    "role": "Member"
   },
   {
-    "name": "Aditya Kulkarni",
-    "email": "kulkarniaditya5106@gmail.com",
-    "phone": "9307027467",
-    "team": "Technical",
-    "displayName": "Aditya Kulkarni"
+    "firstName": "Varad",
+    "lastName": "Athalye",
+    "email": "vsamiket2125@gmail.com",
+    "team": "Finance & Sponsorship",
+    "role": "Member"
   },
   {
-    "name": "Saanidhi Gade",
-    "email": "24028075@pvgcoet.ac.in",
-    "phone": "7249635939",
-    "team": "Technical",
-    "displayName": "Saanidhi Gade"
+    "firstName": "Nawaz",
+    "lastName": "Patel",
+    "email": "nawazpatel8008@gmail.com",
+    "team": "Finance & Sponsorship",
+    "role": "Member"
   },
   {
-    "name": "Vedant Yeole",
-    "email": "24103011@pvgcoet.ac.in",
-    "phone": "7588054620",
-    "team": "Technical",
-    "displayName": "Vedant Yeole"
+    "firstName": "Avadhoot",
+    "lastName": "Amrale",
+    "email": "avadhoot.amrale@gmail.com",
+    "team": "Finance & Sponsorship",
+    "role": "Member"
   },
   {
-    "name": "Soham Katkar",
-    "email": "sohamkatkar2112@gmail.com",
-    "phone": "7745017009",
-    "team": "Technical",
-    "displayName": "Soham Katkar"
+    "firstName": "Pratham",
+    "lastName": "Verma",
+    "email": "prathamverma2607@gmail.com",
+    "team": "Finance & Sponsorship",
+    "role": "Member"
   },
   {
-    "name": "Hiya Pantvaidya",
-    "email": "24023073@pvgcoet.ac.in",
-    "phone": "9730865819",
-    "team": "Editorial",
-    "displayName": "Hiya Pantvaidya (Lead)"
+    "firstName": "Swaraj",
+    "lastName": "Awad",
+    "email": "swarajawad2@gmail.com",
+    "team": "Finance & Sponsorship",
+    "role": "Member"
   },
   {
-    "name": "Renuka Joshi",
-    "email": "renukajoshi294@gmail.com",
-    "phone": "8010280776",
-    "team": "Editorial",
-    "displayName": "Renuka Joshi"
+    "firstName": "Ayusha",
+    "lastName": "Firke",
+    "email": "firkeayusha@gmail.com",
+    "team": "Logistics & Operations",
+    "role": "Member"
   },
   {
-    "name": "Maitreyee Bhave",
+    "firstName": "Shreeya",
+    "lastName": "Nene",
+    "email": "25022147@pvgcoet.ac.in",
+    "team": "Logistics & Operations",
+    "role": "Member"
+  },
+  {
+    "firstName": "Ayush",
+    "lastName": "Janunkar",
+    "email": "ayushjanunkar4@gmail.com",
+    "team": "Logistics & Operations",
+    "role": "Member"
+  },
+  {
+    "firstName": "Atharva",
+    "lastName": "Gore",
+    "email": "atharvagore229@gmail.com",
+    "team": "Logistics & Operations",
+    "role": "Member"
+  },
+  {
+    "firstName": "Varad",
+    "lastName": "Mogle",
+    "email": "23111016@pvgcoet.ac.in",
+    "team": "Logistics & Operations",
+    "role": "Member"
+  },
+  {
+    "firstName": "Pushkar",
+    "lastName": "Shingate",
+    "email": "pushkarshingate7@gmail.com",
+    "team": "Logistics & Operations",
+    "role": "Member"
+  },
+  {
+    "firstName": "Prajwal",
+    "lastName": "Adasul",
+    "email": "prajwaladasul@gmail.com",
+    "team": "Logistics & Operations",
+    "role": "Member"
+  },
+  {
+    "firstName": "Samiha",
+    "lastName": "Aserkar",
+    "email": "aserkarsamiha1611@gmail.com",
+    "team": "Logistics & Operations",
+    "role": "Member"
+  },
+  {
+    "firstName": "Rushikesh",
+    "lastName": "Kandalkar",
+    "email": "rushikeshkandalkar07@gmail.com",
+    "team": "Logistics & Operations",
+    "role": "Member"
+  },
+  {
+    "firstName": "Maitreyee",
+    "lastName": "Prayag",
+    "email": "24022200@pvgcoet.ac.in",
+    "team": "Logistics & Operations",
+    "role": "Member"
+  },
+  {
+    "firstName": "Maitreyee",
+    "lastName": "Bhave",
     "email": "bhave.maitreyee@gmail.com",
-    "phone": "7385637089",
     "team": "Editorial",
-    "displayName": "Maitreyee Bhave"
+    "role": "Member"
   },
   {
-    "name": "Yashashri Rajput",
-    "email": "yashashrimdvr@gmail.com",
-    "phone": "8208178550",
+    "firstName": "Yashashri",
+    "lastName": "Rajput",
+    "email": "250116005@pvgcoet.ac.in",
     "team": "Editorial",
-    "displayName": "Yashashri Rajput"
+    "role": "Member"
   },
   {
-    "name": "Lavanya",
+    "firstName": "Lavanya",
+    "lastName": "Kurapati",
     "email": "l.kurapati0502@gmail.com",
-    "phone": "8830756912",
     "team": "Editorial",
-    "displayName": "Lavanya Kurapati"
+    "role": "Member"
   },
   {
-    "name": "Swara Kulkarni",
+    "firstName": "Swara",
+    "lastName": "Kulkarni",
     "email": "25023177@pvgcoet.ac.in",
-    "phone": "7083242752",
     "team": "Editorial",
-    "displayName": "Swara Kulkarni"
+    "role": "Member"
   },
   {
-    "name": "Siddhi Munot",
-    "email": "25022158@pvgcoet.ac.in",
-    "phone": "7972935306",
+    "firstName": "Siddhi",
+    "lastName": "Munot",
+    "email": "siddhimunot7@gmail.com",
     "team": "Editorial",
-    "displayName": "Siddhi Munot"
+    "role": "Member"
+  },
+  {
+    "firstName": "Nachiket",
+    "lastName": "Bedekar",
+    "email": "bedekarnachiket146@gmail.com",
+    "team": "Curation",
+    "role": "Member"
+  },
+  {
+    "firstName": "Shrinand",
+    "lastName": "Joshi",
+    "email": "shrinandjoshi005@gmail.com",
+    "team": "Curation",
+    "role": "Member"
+  },
+  {
+    "firstName": "Hardik",
+    "lastName": "Mhetre",
+    "email": "hardikmhetre@gmail.com",
+    "team": "Curation",
+    "role": "Member"
+  },
+  {
+    "firstName": "Ved",
+    "lastName": "Purohit",
+    "email": "purohitved080@gmail.com",
+    "team": "Curation",
+    "role": "Member"
+  },
+  {
+    "firstName": "Sakshi",
+    "lastName": "Thange",
+    "email": "sakshithange09@gmail.com",
+    "team": "Curation",
+    "role": "Member"
+  },
+  {
+    "firstName": "Tanushree",
+    "lastName": "Makam",
+    "email": "tanushrimakam34@gmail.com",
+    "team": "Curation",
+    "role": "Member"
+  },
+  {
+    "firstName": "Aditya",
+    "lastName": "Kulkarni",
+    "email": "kulkarniaditya5106@gmail.com",
+    "team": "Technical",
+    "role": "Member"
+  },
+  {
+    "firstName": "Vedant",
+    "lastName": "Yeole",
+    "email": "24103011@pvgcoet.ac.in",
+    "team": "Technical",
+    "role": "Member"
+  },
+  {
+    "firstName": "Soham",
+    "lastName": "Katkar",
+    "email": "sohamkatkar2112@gmail.com",
+    "team": "Technical",
+    "role": "Member"
   }
 ]
