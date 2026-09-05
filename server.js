@@ -37,20 +37,34 @@ const MAX_OTP_ATTEMPTS = 5;
 const authTokenStore = new Map();
 const TOKEN_EXPIRY_MS = 24 * 60 * 60 * 1000; // 24 hours
 
-// ─── Nodemailer transporter ─────────────────────────────────────────────────
-const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
-  port: 465,
-  secure: true,
-  family: 4,
-  dnsLookup: (hostname, options, callback) => {
-    dns.lookup(hostname, { family: 4 }, callback);
-  },
-  auth: {
-    user: process.env.GMAIL_USER,
-    pass: (process.env.GMAIL_APP_PASSWORD || "").replace(/\s+/g, ""),
-  },
-});
+// ─── Nodemailer transporter (lazy-init to resolve IPv4 first) ───────────────
+let _transporter = null;
+async function getTransporter() {
+  if (_transporter) return _transporter;
+
+  // Manually resolve smtp.gmail.com to an IPv4 address
+  const addresses = await new Promise((resolve, reject) => {
+    dns.resolve4("smtp.gmail.com", (err, addrs) => {
+      if (err) reject(err);
+      else resolve(addrs);
+    });
+  });
+
+  const smtpIp = addresses[0]; // Use the first IPv4 address
+  console.log(`📧 Resolved smtp.gmail.com to IPv4: ${smtpIp}`);
+
+  _transporter = nodemailer.createTransport({
+    host: smtpIp,
+    port: 465,
+    secure: true,
+    tls: { servername: "smtp.gmail.com" }, // Required for TLS cert validation
+    auth: {
+      user: process.env.GMAIL_USER,
+      pass: (process.env.GMAIL_APP_PASSWORD || "").replace(/\s+/g, ""),
+    },
+  });
+  return _transporter;
+}
 
 function generateOTP() {
   return crypto.randomInt(100000, 999999).toString();
@@ -177,6 +191,7 @@ app.post("/request-otp", otpRequestLimiter, async (req, res) => {
     });
 
     // Send the OTP email
+    const transporter = await getTransporter();
     await transporter.sendMail({
       from: `"TEDxPVGCOETM" <${process.env.GMAIL_USER}>`,
       to: normalizedEmail,
