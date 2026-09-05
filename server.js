@@ -35,12 +35,10 @@ const TOKEN_EXPIRY_MS = 24 * 60 * 60 * 1000; // 24 hours
 
 // ─── Nodemailer transporter ─────────────────────────────────────────────────
 const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
-  port: 587,
-  secure: false,
+  service: "gmail",
   auth: {
     user: process.env.GMAIL_USER,
-    pass: process.env.GMAIL_APP_PASSWORD,
+    pass: (process.env.GMAIL_APP_PASSWORD || "").replace(/\s+/g, ""),
   },
 });
 
