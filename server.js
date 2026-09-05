@@ -68,18 +68,21 @@ const otpRequestLimiter = rateLimit({
   windowMs: 5 * 60 * 1000,
   max: 5,
   message: { error: "Too many OTP requests. Please wait a few minutes." },
+  validate: { xForwardedForHeader: false },
 });
 
 const otpVerifyLimiter = rateLimit({
   windowMs: 5 * 60 * 1000,
   max: 10,
   message: { error: "Too many verification attempts. Please wait a few minutes." },
+  validate: { xForwardedForHeader: false },
 });
 
 const apiLimiter = rateLimit({
   windowMs: 5 * 60 * 1000,
   max: 20,
   message: { error: "Too many requests to this endpoint, please try again." },
+  validate: { xForwardedForHeader: false },
 });
 
 // ─── Express setup ──────────────────────────────────────────────────────────
