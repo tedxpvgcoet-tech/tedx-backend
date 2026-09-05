@@ -189,7 +189,7 @@ app.post("/request-otp", otpRequestLimiter, async (req, res) => {
     return res.json({ success: true, message: "OTP sent to your email." });
   } catch (err) {
     console.error("❌ Error sending OTP:", err);
-    return res.status(500).json({ success: false, error: "Failed to send OTP. Please try again." });
+    return res.status(500).json({ success: false, error: `Failed to send OTP: ${err.message}` });
   }
 });
 
