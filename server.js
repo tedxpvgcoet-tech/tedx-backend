@@ -2,15 +2,10 @@ import express from "express";
 import cors from "cors";
 import rateLimit from "express-rate-limit";
 import crypto from "crypto";
-import nodemailer from "nodemailer";
-import dns from "dns";
 import { readFileSync } from "fs";
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
 import { addSubscriber, addSpeaker, addSponsor } from "./index.js";
-
-// ─── Force IPv4 for Nodemailer to fix Render ENETUNREACH IPv6 errors ────────
-dns.setDefaultResultOrder("ipv4first");
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -37,35 +32,7 @@ const MAX_OTP_ATTEMPTS = 5;
 const authTokenStore = new Map();
 const TOKEN_EXPIRY_MS = 24 * 60 * 60 * 1000; // 24 hours
 
-// ─── Nodemailer transporter (lazy-init to resolve IPv4 first) ───────────────
-let _transporter = null;
-async function getTransporter() {
-  if (_transporter) return _transporter;
-
-  // Manually resolve smtp.gmail.com to an IPv4 address
-  const addresses = await new Promise((resolve, reject) => {
-    dns.resolve4("smtp.gmail.com", (err, addrs) => {
-      if (err) reject(err);
-      else resolve(addrs);
-    });
-  });
-
-  const smtpIp = addresses[0]; // Use the first IPv4 address
-  console.log(`📧 Resolved smtp.gmail.com to IPv4: ${smtpIp}`);
-
-  _transporter = nodemailer.createTransport({
-    host: smtpIp,
-    port: 465,
-    secure: true,
-    tls: { servername: "smtp.gmail.com" }, // Required for TLS cert validation
-    auth: {
-      user: process.env.GMAIL_USER,
-      pass: (process.env.GMAIL_APP_PASSWORD || "").replace(/\s+/g, ""),
-    },
-  });
-  return _transporter;
-}
-
+// No NodeMailer needed --- 
 function generateOTP() {
   return crypto.randomInt(100000, 999999).toString();
 }
@@ -190,25 +157,22 @@ app.post("/request-otp", otpRequestLimiter, async (req, res) => {
       attempts: 0,
     });
 
-    // Send the OTP email
-    const transporter = await getTransporter();
-    await transporter.sendMail({
-      from: `"TEDxPVGCOETM" <${process.env.GMAIL_USER}>`,
-      to: normalizedEmail,
-      subject: "Your TEDx Portal Login Code",
-      html: `
-        <div style="font-family: 'Segoe UI', Arial, sans-serif; max-width: 480px; margin: 0 auto; padding: 32px; background: #0a0a0c; color: #fff; border-radius: 12px;">
-          <h2 style="color: #e81b2a; margin: 0 0 8px 0; font-size: 1.4rem;">TEDxPVGCOETM</h2>
-          <p style="color: #aaa; margin: 0 0 24px 0; font-size: 0.9rem;">Internal Portal Login Code</p>
-          <p style="margin: 0 0 16px 0; color: #ddd;">Hello <strong>${member.displayName}</strong>,</p>
-          <p style="margin: 0 0 24px 0; color: #ccc;">Your one-time login code is:</p>
-          <div style="background: rgba(232, 27, 42, 0.1); border: 1px solid rgba(232, 27, 42, 0.3); border-radius: 8px; padding: 20px; text-align: center; margin-bottom: 24px;">
-            <span style="font-size: 2.2rem; font-weight: 800; letter-spacing: 8px; color: #e81b2a;">${otp}</span>
-          </div>
-          <p style="color: #888; font-size: 0.85rem; margin: 0;">This code expires in 5 minutes. Do not share it with anyone.</p>
-        </div>
-      `,
+    // Send the OTP email via Google Apps Script (HTTPS port 443 allows bypassing Render SMTP block)
+    const scriptResponse = await fetch(process.env.GOOGLE_SCRIPT_URL, {
+      method: "POST",
+      body: JSON.stringify({
+        action: "send-otp",
+        backendSecret: process.env.BACKEND_SECRET,
+        email: normalizedEmail,
+        displayName: member.displayName,
+        otp: otp
+      }),
     });
+
+    const scriptData = await scriptResponse.json();
+    if (!scriptData.success) {
+      throw new Error(scriptData.error || "Google Apps Script rejected the email request");
+    }
 
     console.log(`✅ OTP sent to ${normalizedEmail} for ${member.displayName}`);
     return res.json({ success: true, message: "OTP sent to your email." });
