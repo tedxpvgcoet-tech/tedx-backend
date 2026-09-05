@@ -3,10 +3,14 @@ import cors from "cors";
 import rateLimit from "express-rate-limit";
 import crypto from "crypto";
 import nodemailer from "nodemailer";
+import dns from "dns";
 import { readFileSync } from "fs";
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
 import { addSubscriber, addSpeaker, addSponsor } from "./index.js";
+
+// ─── Force IPv4 for Nodemailer to fix Render ENETUNREACH IPv6 errors ────────
+dns.setDefaultResultOrder("ipv4first");
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
