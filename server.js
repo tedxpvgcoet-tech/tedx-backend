@@ -30,7 +30,7 @@ const MAX_OTP_ATTEMPTS = 5;
 // ─── In-memory auth token store ─────────────────────────────────────────────
 // Map<token, { email, name, displayName, team, expiresAt }>
 const authTokenStore = new Map();
-const TOKEN_EXPIRY_MS = 24 * 60 * 60 * 1000; // 24 hours
+const TOKEN_EXPIRY_MS = 7 * 24 * 60 * 60 * 1000; // 7 days
 
 // No NodeMailer needed --- 
 function generateOTP() {
