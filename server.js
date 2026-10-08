@@ -290,6 +290,7 @@ app.post("/bills", apiLimiter, validateAuthToken, async (req, res) => {
     // Add backend secret so Apps Script can verify the request is from our server
     const payload = {
       ...billData,
+      email: req.authSession.email,
       backendSecret: process.env.BACKEND_SECRET || "",
     };
 
