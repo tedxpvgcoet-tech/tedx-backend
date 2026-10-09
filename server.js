@@ -27,28 +27,42 @@ const otpStore = new Map();
 const OTP_EXPIRY_MS = 5 * 60 * 1000; // 5 minutes
 const MAX_OTP_ATTEMPTS = 5;
 
-// ─── In-memory auth token store ─────────────────────────────────────────────
-// Map<token, { email, name, displayName, team, expiresAt }>
-const authTokenStore = new Map();
+// ─── Stateless JWT Implementation ─────────────────────────────────────────────
 const TOKEN_EXPIRY_MS = 7 * 24 * 60 * 60 * 1000; // 7 days
+
+function signToken(payload) {
+  const dataHex = Buffer.from(JSON.stringify(payload)).toString("hex");
+  const signature = crypto
+    .createHmac("sha256", process.env.BACKEND_SECRET || "fallback_secret")
+    .update(dataHex)
+    .digest("hex");
+  return `${dataHex}.${signature}`;
+}
+
+function verifyToken(token) {
+  try {
+    const [dataHex, signature] = token.split(".");
+    if (!dataHex || !signature) return null;
+    const expectedSignature = crypto
+      .createHmac("sha256", process.env.BACKEND_SECRET || "fallback_secret")
+      .update(dataHex)
+      .digest("hex");
+    if (signature === expectedSignature) {
+      return JSON.parse(Buffer.from(dataHex, "hex").toString("utf-8"));
+    }
+  } catch (e) {}
+  return null;
+}
 
 // No NodeMailer needed --- 
 function generateOTP() {
   return crypto.randomInt(100000, 999999).toString();
 }
 
-function generateToken() {
-  return crypto.randomBytes(32).toString("hex");
-}
-
-// Cleanup expired entries every 10 minutes
 setInterval(() => {
   const now = Date.now();
   for (const [key, val] of otpStore) {
     if (now > val.expiresAt) otpStore.delete(key);
-  }
-  for (const [key, val] of authTokenStore) {
-    if (now > val.expiresAt) authTokenStore.delete(key);
   }
 }, 10 * 60 * 1000);
 
@@ -228,9 +242,8 @@ app.post("/verify-otp", otpVerifyLimiter, (req, res) => {
     otpStore.delete(normalizedEmail);
 
     const member = membersByEmail.get(normalizedEmail);
-    const token = generateToken();
-
-    authTokenStore.set(token, {
+    // Generate a stateless signed JWT
+    const token = signToken({
       email: normalizedEmail,
       name: member.name,
       displayName: member.displayName,
@@ -261,14 +274,13 @@ function validateAuthToken(req, res, next) {
   }
 
   const token = authHeader.split("Bearer ")[1];
-  const session = authTokenStore.get(token);
+  const session = verifyToken(token);
 
   if (!session) {
-    return res.status(401).json({ error: "Unauthorized: Invalid or expired session." });
+    return res.status(401).json({ error: "Unauthorized: Invalid or corrupted token." });
   }
 
   if (Date.now() > session.expiresAt) {
-    authTokenStore.delete(token);
     return res.status(401).json({ error: "Unauthorized: Session has expired. Please log in again." });
   }
 
