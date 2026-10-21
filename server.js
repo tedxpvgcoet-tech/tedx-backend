@@ -320,6 +320,45 @@ app.post("/bills", apiLimiter, validateAuthToken, async (req, res) => {
   }
 });
 
+// ─── NEW: Profile endpoint ──────────────────────────────────────────────────
+app.post("/profile", apiLimiter, validateAuthToken, async (req, res) => {
+  try {
+    const { instagram, linkedin, portfolio } = req.body;
+
+    if (!instagram && !linkedin && !portfolio) {
+      return res.status(400).json({ success: false, error: "At least one social link is required." });
+    }
+
+    if (!process.env.GOOGLE_SCRIPT_URL) {
+      return res.status(500).json({ success: false, error: "Google Script URL not configured." });
+    }
+
+    const payload = {
+      action: "submit-profile",
+      backendSecret: process.env.BACKEND_SECRET || "",
+      name: req.authSession.displayName || req.authSession.name,
+      email: req.authSession.email,
+      team: req.authSession.team,
+      instagram: instagram || "",
+      linkedin: linkedin || "",
+      portfolio: portfolio || "",
+      timestamp: new Date().toISOString(),
+    };
+
+    const response = await fetch(process.env.GOOGLE_SCRIPT_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+
+    const result = await response.json();
+    res.json(result);
+  } catch (err) {
+    console.error("Error proxying profile to Google Script:", err);
+    res.status(500).json({ success: false, error: "Internal server error." });
+  }
+});
+
 // ─── Fun & health ───────────────────────────────────────────────────────────
 app.get("/fun", (req, res) => {
   res.redirect("https://www.youtube.com/shorts/41iWg91yFv0");
