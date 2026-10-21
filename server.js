@@ -323,11 +323,7 @@ app.post("/bills", apiLimiter, validateAuthToken, async (req, res) => {
 // ─── NEW: Profile endpoint ──────────────────────────────────────────────────
 app.post("/profile", apiLimiter, validateAuthToken, async (req, res) => {
   try {
-    const { instagram, linkedin, portfolio } = req.body;
-
-    if (!instagram && !linkedin && !portfolio) {
-      return res.status(400).json({ success: false, error: "At least one social link is required." });
-    }
+    const { instagram, linkedin, portfolio, sameAsLastYear } = req.body;
 
     if (!process.env.GOOGLE_SCRIPT_URL) {
       return res.status(500).json({ success: false, error: "Google Script URL not configured." });
@@ -342,6 +338,7 @@ app.post("/profile", apiLimiter, validateAuthToken, async (req, res) => {
       instagram: instagram || "",
       linkedin: linkedin || "",
       portfolio: portfolio || "",
+      sameAsLastYear: !!sameAsLastYear,
       timestamp: new Date().toISOString(),
     };
 
