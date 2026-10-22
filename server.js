@@ -322,7 +322,7 @@ app.post("/bills", apiLimiter, validateAuthToken, async (req, res) => {
   }
 });
 
-// ─── Bill history and receipt detail requests ───────────────────────────────
+// ─── Bill history and receipt summary requests ──────────────────────────────
 app.get("/bills", apiLimiter, validateAuthToken, async (req, res) => {
   try {
     if (!process.env.GOOGLE_SCRIPT_URL) {
@@ -350,7 +350,7 @@ app.get("/bills", apiLimiter, validateAuthToken, async (req, res) => {
   }
 });
 
-app.post("/bills/:billId/request-details", apiLimiter, validateAuthToken, async (req, res) => {
+app.post("/bills/request-summary", apiLimiter, validateAuthToken, async (req, res) => {
   try {
     if (!process.env.GOOGLE_SCRIPT_URL) {
       return res.status(500).json({ success: false, error: "Google Script URL not configured." });
@@ -360,8 +360,7 @@ app.post("/bills/:billId/request-details", apiLimiter, validateAuthToken, async 
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        action: "request-bill-details",
-        rowIndex: req.params.billId,
+        action: "request-all-bills",
         name: req.authSession.name || "",
         displayName: req.authSession.displayName || "",
         team: req.authSession.team || "",
@@ -371,10 +370,10 @@ app.post("/bills/:billId/request-details", apiLimiter, validateAuthToken, async 
     });
 
     const result = await response.json();
-    return res.status(response.ok && result.success ? 200 : (result.error === "Bill not found" ? 404 : 502)).json(result);
+    return res.status(response.ok && result.success ? 200 : 502).json(result);
   } catch (err) {
-    console.error("Error requesting bill details:", err);
-    return res.status(502).json({ success: false, error: "Unable to send bill details." });
+    console.error("Error requesting bill summary:", err);
+    return res.status(502).json({ success: false, error: "Unable to send bill summary." });
   }
 });
 
