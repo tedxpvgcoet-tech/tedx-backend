@@ -28,7 +28,7 @@ const OTP_EXPIRY_MS = 5 * 60 * 1000; // 5 minutes
 const MAX_OTP_ATTEMPTS = 5;
 
 // ─── Stateless JWT Implementation ─────────────────────────────────────────────
-const TOKEN_EXPIRY_MS = 7 * 24 * 60 * 60 * 1000; // 7 days
+const TOKEN_EXPIRY_MS = 365 * 24 * 60 * 60 * 1000; // 1 year (effectively no expiry)
 
 function signToken(payload) {
   const dataHex = Buffer.from(JSON.stringify(payload)).toString("hex");
