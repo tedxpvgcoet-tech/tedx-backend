@@ -295,6 +295,14 @@ app.post("/bills", apiLimiter, validateAuthToken, async (req, res) => {
     // Strip auth fields before forwarding to Google Script
     const { keyword, authToken, ...billData } = req.body;
 
+    if (!billData.amount || Number(billData.amount) <= 0) {
+      return res.status(400).json({ success: false, error: "A valid Amount is required." });
+    }
+
+    if (!billData.reason || !billData.reason.trim()) {
+      return res.status(400).json({ success: false, error: "Reason / Description is required." });
+    }
+
     if (!process.env.GOOGLE_SCRIPT_URL) {
       return res.status(500).json({ error: "Google Script URL not configured" });
     }
