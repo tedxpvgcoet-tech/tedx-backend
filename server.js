@@ -299,11 +299,9 @@ app.post("/bills", apiLimiter, validateAuthToken, async (req, res) => {
       return res.status(500).json({ error: "Google Script URL not configured" });
     }
 
-    // Add backend secret so Apps Script can verify the request is from our server
     const payload = {
       ...billData,
       action: "submit-bill",
-      billId: crypto.randomUUID(),
       name: req.authSession.displayName || req.authSession.name,
       team: req.authSession.team,
       email: req.authSession.email,
@@ -336,7 +334,7 @@ app.get("/bills", apiLimiter, validateAuthToken, async (req, res) => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         action: "list-bills",
-        team: req.authSession.team,
+        name: req.authSession.displayName || req.authSession.name,
         backendSecret: process.env.BACKEND_SECRET || "",
       }),
     });
@@ -360,8 +358,8 @@ app.post("/bills/:billId/request-details", apiLimiter, validateAuthToken, async 
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         action: "request-bill-details",
-        billId: req.params.billId,
-        team: req.authSession.team,
+        rowIndex: req.params.billId,
+        name: req.authSession.displayName || req.authSession.name,
         email: req.authSession.email,
         backendSecret: process.env.BACKEND_SECRET || "",
       }),
