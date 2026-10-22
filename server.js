@@ -377,6 +377,34 @@ app.post("/bills/request-summary", apiLimiter, validateAuthToken, async (req, re
   }
 });
 
+app.post("/bills/:billId/request-details", apiLimiter, validateAuthToken, async (req, res) => {
+  try {
+    if (!process.env.GOOGLE_SCRIPT_URL) {
+      return res.status(500).json({ success: false, error: "Google Script URL not configured." });
+    }
+
+    const response = await fetch(process.env.GOOGLE_SCRIPT_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        action: "request-bill-details",
+        rowIndex: req.params.billId,
+        name: req.authSession.name || "",
+        displayName: req.authSession.displayName || "",
+        team: req.authSession.team || "",
+        email: req.authSession.email,
+        backendSecret: process.env.BACKEND_SECRET || "",
+      }),
+    });
+
+    const result = await response.json();
+    return res.status(response.ok && result.success ? 200 : 502).json(result);
+  } catch (err) {
+    console.error("Error requesting individual bill details:", err);
+    return res.status(502).json({ success: false, error: "Unable to send bill details." });
+  }
+});
+
 // ─── NEW: Profile endpoint ──────────────────────────────────────────────────
 app.post("/profile", apiLimiter, validateAuthToken, async (req, res) => {
   try {
