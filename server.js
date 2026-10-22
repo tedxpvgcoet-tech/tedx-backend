@@ -334,7 +334,10 @@ app.get("/bills", apiLimiter, validateAuthToken, async (req, res) => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         action: "list-bills",
-        name: req.authSession.displayName || req.authSession.name,
+        name: req.authSession.name || "",
+        displayName: req.authSession.displayName || "",
+        email: req.authSession.email || "",
+        team: req.authSession.team || "",
         backendSecret: process.env.BACKEND_SECRET || "",
       }),
     });
@@ -359,7 +362,9 @@ app.post("/bills/:billId/request-details", apiLimiter, validateAuthToken, async 
       body: JSON.stringify({
         action: "request-bill-details",
         rowIndex: req.params.billId,
-        name: req.authSession.displayName || req.authSession.name,
+        name: req.authSession.name || "",
+        displayName: req.authSession.displayName || "",
+        team: req.authSession.team || "",
         email: req.authSession.email,
         backendSecret: process.env.BACKEND_SECRET || "",
       }),
