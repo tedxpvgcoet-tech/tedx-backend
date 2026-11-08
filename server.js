@@ -259,6 +259,7 @@ app.post("/verify-otp", otpVerifyLimiter, (req, res) => {
       token,
       name: member.displayName,
       team: member.team,
+      email: normalizedEmail,
     });
   } catch (err) {
     console.error("❌ Error verifying OTP:", err);
@@ -330,6 +331,17 @@ app.post("/bills", apiLimiter, validateAuthToken, async (req, res) => {
   }
 });
 
+// ─── Treasurer / Finance Authorizations ─────────────────────────────────────
+const TREASURER_EMAILS = new Set([
+  "afaan1902@gmail.com",
+  "ritikaparadkar8999@gmail.com",
+  "jagadishdrp@gmail.com",
+]);
+
+function isTreasurer(email) {
+  return TREASURER_EMAILS.has((email || "").toLowerCase().trim());
+}
+
 // ─── Bill history and receipt summary requests ──────────────────────────────
 app.get("/bills", apiLimiter, validateAuthToken, async (req, res) => {
   try {
@@ -337,11 +349,14 @@ app.get("/bills", apiLimiter, validateAuthToken, async (req, res) => {
       return res.status(500).json({ success: false, error: "Google Script URL not configured." });
     }
 
+    const userIsTreasurer = isTreasurer(req.authSession.email);
+    const requestAll = req.query.view === "all" && userIsTreasurer;
+
     const response = await fetch(process.env.GOOGLE_SCRIPT_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        action: "list-bills",
+        action: requestAll ? "list-all-bills" : "list-bills",
         name: req.authSession.name || "",
         displayName: req.authSession.displayName || "",
         email: req.authSession.email || "",
@@ -351,10 +366,43 @@ app.get("/bills", apiLimiter, validateAuthToken, async (req, res) => {
     });
 
     const result = await response.json();
-    return res.status(response.ok && result.success ? 200 : 502).json(result);
+    return res.status(response.ok && result.success ? 200 : 502).json({
+      ...result,
+      isTreasurer: userIsTreasurer,
+    });
   } catch (err) {
     console.error("Error loading bill history:", err);
     return res.status(502).json({ success: false, error: "Unable to load bill history." });
+  }
+});
+
+app.post("/bills/:billId/toggle-reimburse", apiLimiter, validateAuthToken, async (req, res) => {
+  try {
+    if (!isTreasurer(req.authSession.email)) {
+      return res.status(403).json({ success: false, error: "Forbidden: Only the treasurer can update reimbursement status." });
+    }
+
+    if (!process.env.GOOGLE_SCRIPT_URL) {
+      return res.status(500).json({ success: false, error: "Google Script URL not configured." });
+    }
+
+    const response = await fetch(process.env.GOOGLE_SCRIPT_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        action: "update-reimbursement",
+        rowIndex: req.params.billId,
+        reimbursed: req.body.reimbursed ? 1 : 0,
+        treasurerEmail: req.authSession.email,
+        backendSecret: process.env.BACKEND_SECRET || "",
+      }),
+    });
+
+    const result = await response.json();
+    return res.status(response.ok && result.success ? 200 : 502).json(result);
+  } catch (err) {
+    console.error("Error updating reimbursement status:", err);
+    return res.status(502).json({ success: false, error: "Unable to update reimbursement status." });
   }
 });
 
@@ -369,6 +417,7 @@ app.post("/bills/request-summary", apiLimiter, validateAuthToken, async (req, re
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         action: "request-all-bills",
+        onlyPending: Boolean(req.body.onlyPending),
         name: req.authSession.name || "",
         displayName: req.authSession.displayName || "",
         team: req.authSession.team || "",
