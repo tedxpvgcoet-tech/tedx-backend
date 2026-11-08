@@ -342,6 +342,63 @@ function isTreasurer(email) {
   return TREASURER_EMAILS.has((email || "").toLowerCase().trim());
 }
 
+function findMemberByName(targetName) {
+  if (!targetName) return null;
+  const clean = (s) =>
+    (s || "")
+      .toLowerCase()
+      .replace(/\s*\(lead\)\s*/gi, "")
+      .replace(/[^a-z0-9]/g, "")
+      .trim();
+
+  const targetClean = clean(targetName);
+  if (!targetClean) return null;
+
+  for (const m of activeMembers) {
+    if (clean(m.name) === targetClean || clean(m.displayName) === targetClean) {
+      return m;
+    }
+  }
+
+  for (const m of activeMembers) {
+    const cName = clean(m.name);
+    const cDisplay = clean(m.displayName);
+    if (
+      cName.includes(targetClean) ||
+      targetClean.includes(cName) ||
+      cDisplay.includes(targetClean) ||
+      targetClean.includes(cDisplay)
+    ) {
+      return m;
+    }
+  }
+
+  const targetTokens = (targetName || "")
+    .toLowerCase()
+    .replace(/\s*\(lead\)\s*/gi, "")
+    .split(/\s+/)
+    .filter(Boolean);
+
+  if (targetTokens.length >= 2) {
+    const firstT = targetTokens[0];
+    const lastT = targetTokens[targetTokens.length - 1];
+    for (const m of activeMembers) {
+      const mTokens = (m.name || "")
+        .toLowerCase()
+        .replace(/\s*\(lead\)\s*/gi, "")
+        .split(/\s+/)
+        .filter(Boolean);
+      if (mTokens.length >= 2) {
+        if (mTokens[0] === firstT && mTokens[mTokens.length - 1] === lastT) {
+          return m;
+        }
+      }
+    }
+  }
+
+  return null;
+}
+
 // ─── Bill history and receipt summary requests ──────────────────────────────
 app.get("/bills", apiLimiter, validateAuthToken, async (req, res) => {
   try {
@@ -459,6 +516,55 @@ app.post("/bills/:billId/request-details", apiLimiter, validateAuthToken, async 
   } catch (err) {
     console.error("Error requesting individual bill details:", err);
     return res.status(502).json({ success: false, error: "Unable to send bill details." });
+  }
+});
+
+// ─── Query a bill (Treasurer -> Member Alert Email & Sheet Logging) ─────────
+app.post("/bills/:billId/query", apiLimiter, validateAuthToken, async (req, res) => {
+  try {
+    if (!isTreasurer(req.authSession.email)) {
+      return res.status(403).json({ success: false, error: "Forbidden: Only the treasurer can send queries." });
+    }
+
+    const { message, memberName, memberEmail: overrideEmail } = req.body;
+    if (!message || !message.trim()) {
+      return res.status(400).json({ success: false, error: "Query message is required." });
+    }
+
+    if (!process.env.GOOGLE_SCRIPT_URL) {
+      return res.status(500).json({ success: false, error: "Google Script URL not configured." });
+    }
+
+    const member = findMemberByName(memberName);
+    const resolvedEmail = (overrideEmail || member?.email || "").trim();
+
+    if (!resolvedEmail) {
+      return res.status(400).json({
+        success: false,
+        error: `Could not resolve email address for "${memberName}". Please check member directory.`,
+      });
+    }
+
+    const response = await fetch(process.env.GOOGLE_SCRIPT_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        action: "query-bill",
+        rowIndex: req.params.billId,
+        message: message.trim(),
+        treasurerEmail: req.authSession.email,
+        treasurerName: req.authSession.displayName || req.authSession.name || "Finance Team",
+        memberEmail: resolvedEmail,
+        memberName: memberName || member?.name || "Member",
+        backendSecret: process.env.BACKEND_SECRET || "",
+      }),
+    });
+
+    const result = await response.json();
+    return res.status(response.ok && result.success ? 200 : 502).json(result);
+  } catch (err) {
+    console.error("Error sending bill query:", err);
+    return res.status(502).json({ success: false, error: "Unable to send bill query." });
   }
 });
 
