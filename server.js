@@ -568,6 +568,37 @@ app.post("/bills/:billId/query", apiLimiter, validateAuthToken, async (req, res)
   }
 });
 
+// ─── Proxy Photo / Receipt on demand (Bypasses Drive Permissions) ───────────
+app.post("/bills/photo-proxy", validateAuthToken, async (req, res) => {
+  try {
+    const { fileUrl, fileId } = req.body;
+    if (!fileUrl && !fileId) {
+      return res.status(400).json({ success: false, error: "fileUrl or fileId is required" });
+    }
+
+    if (!process.env.GOOGLE_SCRIPT_URL) {
+      return res.status(500).json({ success: false, error: "Google Script URL not configured" });
+    }
+
+    const response = await fetch(process.env.GOOGLE_SCRIPT_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        action: "get-file-data",
+        fileUrl: fileUrl || "",
+        fileId: fileId || "",
+        backendSecret: process.env.BACKEND_SECRET || "",
+      }),
+    });
+
+    const result = await response.json();
+    return res.status(response.ok && result.success ? 200 : 502).json(result);
+  } catch (err) {
+    console.error("Error proxying bill photo:", err);
+    return res.status(502).json({ success: false, error: "Unable to load receipt photo." });
+  }
+});
+
 // ─── NEW: Profile endpoint ──────────────────────────────────────────────────
 app.post("/profile", apiLimiter, validateAuthToken, async (req, res) => {
   try {
